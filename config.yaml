@@ -2,7 +2,7 @@
 # 机场订阅
 proxy-providers:
   Airport1:
-    url: "https://cdn.0be.xyz/api/userhome/rssusernodeext?subkey=33696b44d8264cae8aa8f27aaa18f92d&inServerType=3&shownodesubinfo=1&usenodetype=0&loc=%E6%97%A5%E6%9C%AC%2C%E9%A6%99%E6%B8%AF"
+    url: ""
     type: http
     interval: 86400
     health-check:
@@ -11,7 +11,7 @@ proxy-providers:
       interval: 300
     proxy: 直连
   Airport2:
-    url: "https://20a762201a23e83520ddc97000520859.sailingnode.pro/ws/connect?token=20a762201a23e83520ddc97000520859"
+    url: ""
     type: http
     interval: 86400
     health-check:
@@ -47,8 +47,8 @@ profile:
   store-fake-ip: true
 
 # 控制面板
-external-controller: 192.168.4.3:9090
-secret: "syou8296"
+external-controller: 0.0.0.0:9090
+secret: ""
 external-ui: "/etc/nikki/run/ui"
 external-ui-name: zashboard
 external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
@@ -127,10 +127,8 @@ dns:
     - "+.nintendo.net"
   default-nameserver:
     - 223.5.5.5
-    - 119.29.29.29
   proxy-server-nameserver:
-    - 223.5.5.5
-    - 119.29.29.29
+    - https://223.5.5.5/dns-query
   # namesever尽量用运营商提供的DNS
   nameserver:
     - 223.5.5.5
@@ -161,6 +159,7 @@ proxy-groups:
 # 此规则部分没有做防泄露处理，因为弊严重大于利！
 rules:
   - RULE-SET,private_domain,直连
+  - RULE-SET,proxylite,🚀 默认代理
   - RULE-SET,ai,🤖 ChatGPT
   - RULE-SET,github_domain,👨🏿‍💻 GitHub
   - RULE-SET,google_domain,🍀 Google
@@ -179,8 +178,10 @@ rules:
 rule-anchor:
   ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
   domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  class: &class {type: http, interval: 86400, behavior: classical, format: text}
 rule-providers: 
   private_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  proxylite: { <<: *class, url: "https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/master/ProxyLite.list"}
   ai: {  <<: *domain, url: "https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
   google_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
   github_domain: { <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
