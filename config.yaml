@@ -5,7 +5,7 @@
 # 机场订阅
 proxy-providers:
   Airport1:
-    url: "https://a3eb68801be29499d94aed6a4965094b.cdn-res-oss-cn-hongkong-aliyuncs-file.com/s?t=a3eb68801be29499d94aed6a4965094b.jpg"
+    url: ""
     type: http
     interval: 86400
     health-check:
